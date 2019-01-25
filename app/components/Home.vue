@@ -110,10 +110,9 @@
         methods: {
             refresh(args) {
                 let pullRefresh = args.object;
-                this.$store.dispatch('getHistory');
-                setTimeout(() => {
+                this.$store.dispatch('getHistory').then(() => {
                     pullRefresh.refreshing = false;
-                }, 1000);
+                });
             },
             showDetails(item) {
                 this.$showModal(details, { props: { item: item }});

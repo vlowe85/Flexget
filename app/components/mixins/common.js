@@ -3,9 +3,12 @@ let common = {
         //
     },
     methods: {
-        goToPage(pageComponent) {
+        goToPage(pageComponent, trans) {
+            let transitionObj = (typeof(trans) === "undefined") ? {} : trans;
             // use the manual navigation method
-            this.$navigateTo(pageComponent);
+            this.$navigateTo(pageComponent, {
+                transition: transitionObj
+            });
         },
     },
     data() {
