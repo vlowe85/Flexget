@@ -21,17 +21,17 @@
                                 <Label col="0" row="0" class="font-weight-normal"
                                        paddingLeft="10" fontSize="15" color="#ffffff"
                                        text="Latest downloads"></Label>
-                                <GridLayout col="2" row="0"  columns="auto,auto" rows="auto">
+                                <GridLayout col="2" row="0"  columns="auto,auto" rows="auto" @tap="goToPage($routes.History)">
                                     <Label col="0" row="0" class="font-weight-normal" marginRight="5" marginBottom="2"
                                            fontSize="14" color="#ffffff" text="History"></Label>
                                     <Image col="1" row="0" horizontalAlignment="right" height="12" marginRight="10"
-                                           @tap="goToPage($routes.History)" src="~/assets/images/icons/fwd-icon.png"></Image>
+                                           src="~/assets/images/icons/fwd-icon.png"></Image>
                                 </GridLayout>
                             </GridLayout>
 
                             <ScrollView v-show="history.length > 0" orientation="horizontal" scrollBarIndicatorVisible="false">
                                 <StackLayout orientation="horizontal">
-                                    <CardView v-for="item in history" :key="item.id" margin="5" height="162dp" width="108dp" backgroundColor="#e1e1e1"
+                                    <CardView v-for="item in history" :key="item.id" margin="5" height="162dp" width="108dp" backgroundColor="transparent"
                                               elevation="40" radius="5" verticalAlignment="center" @tap="showDetails(item)">
                                         <StackLayout>
                                             <Image v-show="item.poster_url.length > 0" :src="item.poster_url"
@@ -101,7 +101,9 @@
             }
         },
         created() {
-            this.$store.dispatch('getHistory');
+            this.$store.dispatch('getHistory').then(() => {
+                this.$store.dispatch('queryHistory');
+            });
         },
         mounted() {
             const vm = this;
@@ -115,7 +117,10 @@
                 });
             },
             showDetails(item) {
-                this.$showModal(details, { props: { item: item }});
+                this.$showModal(details, {
+                    props: { item: item },
+                    fullscreen: true,
+                });
             },
         },
         data() {

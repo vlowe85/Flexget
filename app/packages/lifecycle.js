@@ -22,7 +22,9 @@ export default function (Vue)  {
                             password: response.data[0][2]
                         })
                             .then(() => {
-                                vm.$store.dispatch('queryHistory');
+                                vm.$store.dispatch('getHistory').then(() => {
+                                    vm.$store.dispatch('queryHistory');
+                                });
                             })
                             .catch((error) => {
                                 console.log(error);
@@ -65,7 +67,9 @@ export default function (Vue)  {
                             password: response.data[0][2]
                         })
                             .then(() => {
-                                vm.$store.dispatch('queryHistory');
+                                vm.$store.dispatch('getHistory').then(() => {
+                                    vm.$store.dispatch('queryHistory');
+                                });
                             })
                             .catch((error) => {
                                 console.log(error);

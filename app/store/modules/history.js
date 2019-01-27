@@ -99,6 +99,7 @@ export default {
                         page: pagination,
                     }
                 }).then((response) => {
+                    console.log("Got "+response.data.length+ " history items");
                     if(!response.data) return resolve(false);
                     response.data.forEach(item => {
                         // check if item already exists in our db

@@ -15,10 +15,10 @@
                 </StackLayout>
 
                 <ScrollView orientation="vertical">
-                    <StackLayout>
+                    <StackLayout height="100%">
 
                         <StackLayout width="95%" marginTop="15" backgroundColor="#FFFFFF" borderRadius="5" paddingTop="5">
-                            <ListView ref="listView" for="item in listViewData" >
+                            <ListView ref="listView" for="item in listViewData">
                                 <v-template>
                                     <GridLayout columns="auto,*" rows="*, *" paddingLeft="10" paddingTop="5" paddingBottom="5" paddingRight="5">
                                         <Image col="0" row="0" v-show="item.poster_url.length > 0" :src="item.poster_url" marginRight="10"

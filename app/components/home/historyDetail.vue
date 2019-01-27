@@ -49,7 +49,8 @@
                                 <StackLayout orientation="horizontal">
                                     <GridLayout rows="auto, auto, auto" v-for="actor in cast"
                                                 marginRight="15">
-                                        <Image borderRadius="5%" row="0" :src="'https://image.tmdb.org/t/p/w200'+actor.profile_path"
+                                        <Image borderRadius="5%" row="0"
+                                               :src="actor.profile_path ? 'https://image.tmdb.org/t/p/w200'+actor.profile_path : 'https://via.placeholder.com/100/3A6073/FFFFFF?text=N/A'"
                                                height="100" width="100" stretch="aspectFill"></Image>
                                         <Label row="1" fontSize="14" color="#fff"
                                                :text="actor.name"></Label>
