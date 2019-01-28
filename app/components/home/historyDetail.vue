@@ -9,10 +9,10 @@
                                     columns="auto, *, auto" padding="15 10" height="100%"
                                     style="background: linear-gradient(to bottom, #253a46, rgba(0,0,0,0), rgba(0,0,0,0))">
 
-                            <GridLayout row="0" col="0" columns="auto,*" rows="auto">
-                                <Image col="0" row="0" src="~/assets/images/icons/back-icon.png" height="15" marginLeft="10" marginTop="10" @tap="$modal.close"></Image>
+                            <GridLayout row="0" col="0" columns="auto,*" rows="auto" @tap="$modal.close" android:marginTop="20">
+                                <Image col="0" row="0" src="~/assets/images/icons/back-icon.png" height="15" marginLeft="10" marginTop="10"></Image>
                                 <Label col="1" row="0" fontSize="15" class="font-weight-normal text-left" horizontalAlignment="left" marginLeft="5"
-                                       marginTop="10" color="#FFFFFF" text="Back" @tap="$modal.close"></Label>
+                                       marginTop="10" color="#FFFFFF" text="Back"></Label>
                             </GridLayout>
                             <Label row="1" col="0" colSpan="3"
                                    padding="20" class="fa text-center" color="rgba(255, 255, 255, 0.6)"
@@ -21,11 +21,11 @@
                                    colSpan="3" color="#fff" fontSize="25" fontWeight="bold"
                                    letterSpacing="0.05" :text="title"></Label>
                             <StackLayout row="3" col="0" colSpan="3" orientation="horizontal" marginTop="5">
-                                <Label padding="5 15" marginRight="2.5" color="#fff"
+                                <Label v-show="item.quality" padding="5 15" marginRight="2.5" color="#fff"
                                        :text="item.quality" class="round-corners"></Label>
-                                <Label padding="5 15" marginRight="2.5" color="#fff"
+                                <Label v-show="item.resolution" padding="5 15" marginRight="2.5" color="#fff"
                                        :text="item.resolution" class="round-corners"></Label>
-                                <Label padding="5 15" marginRight="2.5" color="#fff"
+                                <Label v-show="item.codec" padding="5 15" marginRight="2.5" color="#fff"
                                        :text="item.codec" class="round-corners"></Label>
                             </StackLayout>
                             <Label row="4" col="0"

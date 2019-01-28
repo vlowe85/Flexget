@@ -1,9 +1,9 @@
 <template>
-    <Page class="page" actionBarHidden="true" backgroundSpanUnderStatusBar="true">
+    <Page class="page" actionBarHidden="true" backgroundSpanUnderStatusBar="true" @loaded="pageLoaded">
 
         <GridLayout orientation="vertical" width="100%" height="100%" columns="*" rows="*,auto">
 
-            <StackLayout col="0" row="0" class="bottom-gradient">
+            <StackLayout col="0" row="0" class="bottom-gradient" android:paddingTop="30">
 
                 <PullToRefresh @refresh="refresh">
                     <ScrollView orientation="vertical">
@@ -14,7 +14,7 @@
                                 <Label col="0" row="0" text="Home" class="font-weight-normal"
                                        color="#ffffff" padding="10" fontSize="18"></Label>
                                 <Image col="1" row="0" horizontalAlignment="right" height="24" width="24" marginRight="10"
-                                       @tap="goToPage($routes.Settings)" src="~/assets/images/icons/more_icon.png"></Image>
+                                       padding="10" @tap="goToPage($routes.Settings)" src="~/assets/images/icons/more_icon.png"></Image>
                             </GridLayout>
 
                             <GridLayout columns="auto,*,auto" rows="auto">

@@ -3,7 +3,7 @@
 
         <GridLayout orientation="vertical" width="100%" height="100%" columns="*" rows="*,auto">
 
-            <StackLayout col="0" row="0" class="bottom-gradient">
+            <StackLayout col="0" row="0" class="bottom-gradient" android:paddingTop="30">
 
                 <StackLayout>
                     <GridLayout columns="auto,*" rows="auto">
