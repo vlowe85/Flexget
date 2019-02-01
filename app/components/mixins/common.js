@@ -8,11 +8,7 @@ let common = {
     mounted() {
         this.width = platform.screen.mainScreen.widthDIPs;
         this.height = platform.screen.mainScreen.heightDIPs;
-        if (app.ios) {
-            this.platform = "ios";
-        } else if (app.android) {
-            this.platform = "android";
-        }
+        this.platform = app.ios ? "ios" : app.android ? "android" : "";
         this.version = new VersionNumber().get();
     },
     computed: {

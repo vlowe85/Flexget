@@ -2,7 +2,7 @@
     <Page actionBarHidden="true">
         <FlexboxLayout class="page bottom-gradient">
             <StackLayout class="form">
-                <Image class="logo" src="~/assets/images/flexget_logo.png"></Image>
+                <Image class="logo" src="~/assets/images/flexget_long_logo.png"></Image>
                 <!--<LottieView width="300" height="300" src="lottie-action.json" loop="true" autoplay="true"></LottieView>-->
 
                 <GridLayout rows="auto, auto, auto, auto" class="form-grid">
@@ -47,7 +47,7 @@
                 user: {
                     username: "flexget",
                     password: "",
-                    server: "",
+                    server: "http://{IP}:5050/api/",
                 }
             };
         },

@@ -21,7 +21,7 @@
                             <ListView ref="listView" for="item in listViewData" @itemTap="onItemTap" @loadMoreItems="onLoadMoreItems">
                                 <v-template>
                                     <GridLayout columns="auto,*" rows="*, *" paddingLeft="10" paddingTop="5" paddingBottom="5" paddingRight="5">
-                                        <Image col="0" row="0" v-show="item.poster_url.length > 0" :src="item.poster_url" marginRight="10"
+                                        <Image col="0" row="0" v-show="item.poster_url && item.poster_url.length > 0" :src="item.poster_url" marginRight="10"
                                                stretch="aspectFill" height="100" borderRadius="5" rowSpan="2"></Image>
                                         <Label col="1" row="0" fontSize="11" class="font-weight-normal"
                                                :text="item.title" textWrap="true" verticalAlignment="top"></Label>
@@ -29,6 +29,7 @@
                                     </GridLayout>
                                 </v-template>
                             </ListView>
+                            <ActivityIndicator ios:marginTop="-30" color="orange" :busy="loading"></ActivityIndicator>
                         </StackLayout>
 
                     </StackLayout>
@@ -58,12 +59,31 @@
                 this.showDetails(event.item);
             },
             onLoadMoreItems() {
-                console.log("onLoadMoreItems");
+                if(this.loadMoreEnabled && !this.loading) {
+                    this.loading = true;
+                    this.$store.dispatch('getHistory', this.page++).then((results) => {
+                        if(!results) {
+                            setTimeout(() => {
+                                this.loading = false;
+                                return this.loadMoreEnabled = false;
+                            }, 1000);
+                        }
+                        this.$store.dispatch('queryHistory');
+                        setTimeout(() => {
+                            this.loading = false;
+                        }, 1000);
+                    }).catch(() => {
+                        this.loadMoreEnabled = false;
+                        this.loading = false;
+                    });
+                }
             }
         },
         data() {
             return {
-                //
+                page: 1,
+                loading: false,
+                loadMoreEnabled: true,
             }
         }
     };

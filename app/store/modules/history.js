@@ -92,10 +92,11 @@ export default {
         getHistory({state, dispatch, getters, rootState}, page) {
             return new Promise((resolve, reject) => {
                 let api = getters.getServerUrl,
-                    pagination = (typeof(page) === "undefined") ? 1 : page;
+                    pagination = (typeof(page) === "undefined") ? 1 : page,
+                    perPage = (typeof(page) === "undefined") ? 20 : 10;
                 axios.get(api+"/history", {
                     params: {
-                        per_page: 20,
+                        per_page: perPage,
                         page: pagination,
                     }
                 }).then((response) => {
@@ -151,14 +152,14 @@ export default {
                                 dispatch("insertHistory", download);
                             })
                             .catch(error => {
-                                console.log(error);
+                                console.log("tMDB multi search: "+error);
                                 // insert it without the movieDb data, perhaps we will try again later?
                                 // dispatch("insertHistory", download);
                             });
                     });
                     resolve(true);
                 }).catch((error) => {
-                    console.log(error);
+                    console.log("Flexget history: "+error);
                     reject(error);
                 });
             });

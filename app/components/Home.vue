@@ -17,7 +17,7 @@
                                        padding="10" @tap="goToPage($routes.Settings)" src="~/assets/images/icons/more_icon.png"></Image>
                             </GridLayout>
 
-                            <GridLayout columns="auto,*,auto" rows="auto">
+                            <GridLayout columns="auto,*,auto" rows="auto" paddingBottom="5">
                                 <Label col="0" row="0" class="font-weight-normal"
                                        paddingLeft="10" fontSize="15" color="#ffffff"
                                        text="Latest downloads"></Label>
@@ -104,14 +104,15 @@
                     moment(this.popularItem.release_date, "YYYY-MM-DD").format("Do MMM YYYY") : this.popularItem.first_air_date : '';
             }
         },
-        created() {
-            this.$store.dispatch('getHistory').then(() => {
-                this.$store.dispatch('queryHistory');
-            });
-        },
         mounted() {
             const vm = this;
             this.$cycle.init(vm);
+
+            setTimeout(() => {
+                this.$store.dispatch('getHistory').then(() => {
+                    this.$store.dispatch('queryHistory');
+                });
+            }, 1000);
         },
         methods: {
             lottieLoaded(args) {
