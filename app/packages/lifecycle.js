@@ -21,7 +21,8 @@ export default function (Vue)  {
                             username: response.data[0][1],
                             password: response.data[0][2]
                         })
-                            .then(() => {
+                            .then((response2) => {
+                                vm.$settings.setString("api-version", response2.headers['api-version']);
                                 vm.$store.dispatch('getHistory').then(() => {
                                     vm.$store.dispatch('queryHistory');
                                 });
@@ -66,7 +67,8 @@ export default function (Vue)  {
                             username: response.data[0][1],
                             password: response.data[0][2]
                         })
-                            .then(() => {
+                            .then((response2) => {
+                                vm.$settings.setString("api-version", response2.headers['api-version']);
                                 vm.$store.dispatch('getHistory').then(() => {
                                     vm.$store.dispatch('queryHistory');
                                 });

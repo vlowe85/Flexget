@@ -25,7 +25,10 @@
                             </CardView>
                         </StackLayout>
                         <StackLayout>
-                            <Label :text="'Version '+version" horizontalAlignment="center" fontSize="12"></Label>
+                            <Label :text="'API Version '+$settings.getString('api-version')" horizontalAlignment="center" fontSize="12"></Label>
+                        </StackLayout>
+                        <StackLayout>
+                            <Label :text="'App Version '+version" horizontalAlignment="center" fontSize="12"></Label>
                         </StackLayout>
                     </StackLayout>
                 </ScrollView>

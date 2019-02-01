@@ -12,6 +12,7 @@ Vue.registerElement('CardView', () => require('nativescript-cardview').CardView)
 Vue.registerElement('LottieView', () => require('nativescript-lottie').LottieView);
 Vue.registerElement('ImageCacheIt', () => require('nativescript-image-cache-it').ImageCacheIt);
 Vue.registerElement('PullToRefresh', () => require('nativescript-pulltorefresh').PullToRefresh);
+//Vue.registerElement("PreviousNextView", () => require("nativescript-iqkeyboardmanager").PreviousNextView);
 
 // Set up routes as a prototype to use throughout the app.
 import routes from '~/router';
@@ -19,6 +20,9 @@ Vue.prototype.$routes = routes;
 
 import Cycle from './packages/lifecycle';
 Vue.use(Cycle);
+
+import * as appSettings from "tns-core-modules/application-settings";
+Vue.prototype.$settings = appSettings;
 
 // Vuex global store
 import store from '~/store';

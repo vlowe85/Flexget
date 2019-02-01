@@ -68,8 +68,9 @@
                     username: this.user.username,
                     password: this.user.password
                 })
-                    .then(() => {
+                    .then((response) => {
                         this.processing = false;
+                        this.$settings.setString("api-version", response.headers['api-version']);
                         this.$store.dispatch('login', this.user);
                     })
                     .catch((error) => {

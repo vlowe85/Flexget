@@ -153,12 +153,12 @@
     }
 
     .popularAnim {
-        opacity: 0;
-        animation-name: bounceIn;
-        animation-duration: 0.5s;
-        animation-fill-mode: forwards;
-        animation-delay: 0.2s;
-        z-index: 100000;
+        /*opacity: 0;*/
+        /*animation-name: bounceIn;*/
+        /*animation-duration: 0.5s;*/
+        /*animation-fill-mode: forwards;*/
+        /*animation-delay: 0.2s;*/
+        /*z-index: 100000;*/
     }
 
 </style>
