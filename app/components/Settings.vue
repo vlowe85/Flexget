@@ -9,25 +9,24 @@
                     <GridLayout columns="auto,*" rows="auto">
                         <Image col="0" row="0" src="~/assets/images/icons/back-icon.png" marginLeft="10"
                                stretch="aspectFill" height="20" @tap="goToPage($routes.Home, {name:'slideRight'})"></Image>
-                        <Label col="1" row="0" text="History" class="font-weight-normal" horizontalAlignment="center"
+                        <Label col="1" row="0" text="Settings" class="font-weight-normal" horizontalAlignment="center"
                                color="#FFFFFF" padding="15" fontSize="18" marginLeft="-20"></Label>
                     </GridLayout>
                 </StackLayout>
 
                 <ScrollView orientation="vertical" width="100%" class="main-bg" height="100%">
                     <StackLayout marginTop="15">
-
-                        <ScrollView orientation="horizontal" scrollBarIndicatorVisible="false" width="100%">
-                            <StackLayout orientation="horizontal" width="100%">
-                                <CardView margin="10" height="50dp" width="95%" @tap="logout" backgroundColor="#FFFFFF"
-                                          elevation="40" radius="5" verticalAlignment="center">
-                                    <StackLayout horizontalAlignment="left" verticalAlignment="center">
-                                        <Label fontSize="16" color="#000000" text="Log out" marginLeft="20"></Label>
-                                    </StackLayout>
-                                </CardView>
-
-                            </StackLayout>
-                        </ScrollView>
+                        <StackLayout orientation="horizontal" width="100%">
+                            <CardView margin="10" height="50dp" width="95%" @tap="logout" backgroundColor="#FFFFFF"
+                                      elevation="40" radius="5" verticalAlignment="center">
+                                <StackLayout horizontalAlignment="left" verticalAlignment="center">
+                                    <Label fontSize="16" color="#000000" text="Log out" marginLeft="20"></Label>
+                                </StackLayout>
+                            </CardView>
+                        </StackLayout>
+                        <StackLayout>
+                            <Label :text="'Version '+version" horizontalAlignment="center" fontSize="12"></Label>
+                        </StackLayout>
                     </StackLayout>
                 </ScrollView>
             </StackLayout>

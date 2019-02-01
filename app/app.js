@@ -2,8 +2,8 @@ import Vue from "nativescript-vue";
 
 // Setup some dev tools, not supported in preview app
 import VueDevtools from 'nativescript-vue-devtools';
-// Vue.use(VueDevtools,  { host: '192.168.64.213' });
-Vue.use(VueDevtools,  { host: '192.168.0.16' });
+Vue.use(VueDevtools,  { host: '192.168.64.213' });
+// Vue.use(VueDevtools,  { host: '192.168.0.16' });
 Vue.config.silent = false;
 Vue.config.devtools = true;
 

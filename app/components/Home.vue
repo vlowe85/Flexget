@@ -29,13 +29,17 @@
                                 </GridLayout>
                             </GridLayout>
 
-                            <ScrollView v-show="history.length > 0" orientation="horizontal" scrollBarIndicatorVisible="false">
+                            <!--<StackLayout>-->
+                                <!--<LottieView height="130" width="auto" src="lottie-action.json" :autoplay="true" :loop="true" @loaded="lottieLoaded"></LottieView>-->
+                            <!--</StackLayout>-->
+
+                            <ScrollView v-show="history.length > 0" orientation="horizontal" scrollBarIndicatorVisible="false" class="fadeInDown">
                                 <StackLayout orientation="horizontal">
                                     <CardView v-for="item in history" :key="item.id" margin="5" height="162dp" width="108dp" backgroundColor="transparent"
                                               elevation="40" radius="5" verticalAlignment="center" @tap="showDetails(item)">
                                         <StackLayout>
-                                            <Image v-show="item.poster_url.length > 0" :src="item.poster_url"
-                                                   stretch="aspectFill" height="162dp" borderRadius="5"></Image>
+                                            <ImageCacheIt v-show="item.poster_url.length > 0" :imageUri="item.poster_url"
+                                                   stretch="aspectFill" height="162dp" borderRadius="5"></ImageCacheIt>
                                             <StackLayout horizontalAlignment="left" marginLeft="5"
                                                          verticalAlignment="center">
                                                 <Label fontSize="18" class="font-weight-normal" horizontalAlignment="left"
@@ -48,9 +52,10 @@
                             </ScrollView>
 
 
-                            <StackLayout v-show="popularItem" height="300" backgroundColor="#FFFFFF" borderRadius="5" margin="10" @tap="showDetails(popularItem)">
-                                <Image v-show="popularItem" :src="popularItem ? popularItem.backdrop_url : ''"
-                                       stretch="aspectFill" height="162dp" borderTopLeftRadius="5" borderTopRightRadius="5"></Image>
+                            <StackLayout v-show="popularItem" backgroundColor="#FFFFFF" class="popularAnim"
+                                         borderRadius="5" margin="10" @tap="showDetails(popularItem)">
+                                <ImageCacheIt v-show="popularItem" :imageUri="popularItem ? popularItem.backdrop_url : ''"
+                                       stretch="aspectFill" height="162dp" borderTopLeftRadius="5" borderTopRightRadius="5"></ImageCacheIt>
 
                                 <GridLayout columns="auto,*,auto" rows="auto, auto">
                                     <GridLayout col="0" row="0" columns="auto,*" rows="auto">
@@ -82,7 +87,6 @@
 
 <script>
     import common from "./mixins/common";
-    import details from "./home/historyDetail";
     const ptn = require('parse-torrent-name');
     const moment = require('moment');
 
@@ -110,22 +114,26 @@
             this.$cycle.init(vm);
         },
         methods: {
+            lottieLoaded(args) {
+                this.anim = args.object;
+                this.anim.playAnimation();
+                console.log(this.anim.isAnimating());
+                console.log(this.anim.duration);
+                console.log(this.anim.progress);
+                console.log(this.anim.speed);
+                this.anim.playAnimation();
+            },
             refresh(args) {
                 let pullRefresh = args.object;
                 this.$store.dispatch('getHistory').then(() => {
+                    this.$store.dispatch('queryHistory');
                     pullRefresh.refreshing = false;
-                });
-            },
-            showDetails(item) {
-                this.$showModal(details, {
-                    props: { item: item },
-                    fullscreen: true,
                 });
             },
         },
         data() {
             return {
-                //
+                anim: null,
             }
         }
     };
@@ -141,6 +149,15 @@
         background: #16222A;  /* fallback for old browsers */
         background: -webkit-linear-gradient(to bottom, #3A6073, #16222A);  /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to bottom, #3A6073, #16222A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+
+    .popularAnim {
+        opacity: 0;
+        animation-name: bounceIn;
+        animation-duration: 0.5s;
+        animation-fill-mode: forwards;
+        animation-delay: 0.2s;
+        z-index: 100000;
     }
 
 </style>

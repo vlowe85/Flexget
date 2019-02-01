@@ -36,7 +36,7 @@
                     <StackLayout row="1" marginTop="5" padding="10">
                         <GridLayout columns="auto, *, auto">
                             <Label col="0" textAlignment="left" class="synopsis--title" text="Synopsis"></Label>
-                            <Label col="2" padding="3 10" textAlignment="right" class="round-corners"
+                            <Label v-show="language.length > 0" col="2" padding="3 10" textAlignment="right" class="round-corners"
                                    color="#FFF" :text="language.toUpperCase()"></Label>
                         </GridLayout>
                         <Label marginTop="5" class="details--synopsis" color="#FFFFFF" :text="item.overview"
@@ -47,7 +47,7 @@
                         <StackLayout marginTop="5">
                             <ScrollView orientation="horizontal">
                                 <StackLayout orientation="horizontal">
-                                    <GridLayout rows="auto, auto, auto" v-for="actor in cast"
+                                    <GridLayout rows="auto, auto, auto" v-for="actor in cast" :key="actor.id"
                                                 marginRight="15">
                                         <Image borderRadius="5%" row="0"
                                                :src="actor.profile_path ? 'https://image.tmdb.org/t/p/w200'+actor.profile_path : 'https://via.placeholder.com/100/3A6073/FFFFFF?text=N/A'"
@@ -61,7 +61,7 @@
                             </ScrollView>
                         </StackLayout>
 
-                        <StackLayout marginTop="15" v-for="ep in episode">
+                        <StackLayout marginTop="15" v-for="ep in episode" :key="ep.id">
                             <GridLayout columns="auto, *, auto">
                                 <Label col="0" textAlignment="left" class="details--title" :text="'Episode '+ep.episode_number+': '+ep.name"></Label>
                             </GridLayout>

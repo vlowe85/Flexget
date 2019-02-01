@@ -1,17 +1,18 @@
 {
     "nativescript": {
         "id": "uk.co.vlowe.flexgetapp",
-        "tns-ios": {
-            "version": "5.1.1"
-        },
         "tns-android": {
             "version": "5.1.0"
+        },
+        "tns-ios": {
+            "version": "5.1.1"
         }
     },
     "description": "Flexget Client",
     "license": "SEE LICENSE IN <your-license-filename>",
     "repository": "<fill-your-repository-here>",
     "dependencies": {
+        "animate.css": "^3.7.0",
         "axios": "^0.18.0",
         "moment": "^2.24.0",
         "nativescript-bottom-navigation": "^1.4.4",
@@ -19,17 +20,18 @@
         "nativescript-fonticon": "^2.0.0",
         "nativescript-image-cache-it": "^4.1.1",
         "nativescript-localstorage": "^2.0.0",
-        "nativescript-lottie": "^2.1.2",
+        "nativescript-lottie": "^3.0.0",
         "nativescript-pulltorefresh": "^2.2.0",
         "nativescript-socket.io": "^0.9.0",
         "nativescript-sqlite": "^2.3.0",
         "nativescript-theme-core": "~1.0.4",
         "nativescript-toast": "^1.4.6",
         "nativescript-ui-listview": "^5.1.1",
+        "nativescript-version-number": "^1.1.0",
         "nativescript-vue": "~2.0.0",
         "nativescript-vue-devtools": "^1.1.0",
         "parse-torrent-name": "^0.5.4",
-        "tns-core-modules": "^5.1.1",
+        "tns-core-modules": "^5.1.2",
         "vue-lottie": "^0.2.1",
         "vuex": "^3.0.1"
     },

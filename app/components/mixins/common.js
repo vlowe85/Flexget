@@ -1,8 +1,20 @@
-import * as app from 'tns-core-modules/application'
-import * as platform from 'tns-core-modules/platform'
-import * as color from 'tns-core-modules/color'
+import { VersionNumber } from "nativescript-version-number";
+import * as platform from 'tns-core-modules/platform';
+import * as app from 'tns-core-modules/application';
+import * as color from 'tns-core-modules/color';
+import details from "../home/historyDetail";
 
 let common = {
+    mounted() {
+        this.width = platform.screen.mainScreen.widthDIPs;
+        this.height = platform.screen.mainScreen.heightDIPs;
+        if (app.ios) {
+            this.platform = "ios";
+        } else if (app.android) {
+            this.platform = "android";
+        }
+        this.version = new VersionNumber().get();
+    },
     computed: {
         //
     },
@@ -20,10 +32,19 @@ let common = {
                 transition: transitionObj
             });
         },
+        showDetails(item) {
+            this.$showModal(details, {
+                props: { item: item },
+                fullscreen: true,
+            });
+        },
     },
     data() {
         return {
-            //
+            width: 0,
+            height: 0,
+            platform: "",
+            version: null,
         }
     }
 };

@@ -79,9 +79,9 @@ export default {
             return items.length > 0 ? items[0] : null;
         },
         latestDownloads(state, getters, rootState) {
-            // state.items.sort((a,b) => {
-            //     return b.flexget_id - a.flexget_id;
-            // });
+            state.items.sort((a,b) => {
+                return b.flexget_id - a.flexget_id;
+            });
             return state.items.slice(0, 20);
         },
         popularContent(state, getters, rootState) {

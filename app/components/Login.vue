@@ -1,27 +1,27 @@
 <template>
     <Page actionBarHidden="true">
-        <FlexboxLayout class="page">
+        <FlexboxLayout class="page bottom-gradient">
             <StackLayout class="form">
                 <Image class="logo" src="~/assets/images/flexget_logo.png"></Image>
                 <!--<LottieView width="300" height="300" src="lottie-action.json" loop="true" autoplay="true"></LottieView>-->
 
-                <GridLayout rows="auto, auto, auto, auto">
+                <GridLayout rows="auto, auto, auto, auto" class="form-grid">
                     <StackLayout row="0" class="input-field">
                         <TextField class="input" hint="Username" :isEnabled="!processing" autocorrect="false"
-                                   autocapitalizationType="none" v-model="user.username"
+                                   autocapitalizationType="none" v-model="user.username" color="#FFFFFF"
                                    returnKeyType="next"></TextField>
                         <StackLayout class="hr-light-blue"></StackLayout>
                     </StackLayout>
 
                     <StackLayout row="1" class="input-field">
-                        <TextField class="input" ref="password" :isEnabled="!processing"
+                        <TextField class="input" ref="password" :isEnabled="!processing" color="#FFFFFF"
                                    hint="Password" secure="true" v-model="user.password"
                                    returnKeyType="next"></TextField>
                         <StackLayout class="hr-light-blue"></StackLayout>
                     </StackLayout>
 
                     <StackLayout row="2" class="input-field">
-                        <TextField class="input" ref="host" :isEnabled="!processing"
+                        <TextField class="input" ref="host" :isEnabled="!processing" color="#FFFFFF"
                                    hint="Server url" v-model="user.server"
                                    returnKeyType="done"></TextField>
                         <StackLayout class="hr-light-blue"></StackLayout>
@@ -96,6 +96,12 @@
     @import '../app-variables';
     // End custom common variables
 
+    .bottom-gradient {
+        background: #16222A;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to bottom, #3A6073, #16222A);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to bottom, #3A6073, #16222A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+
     .page {
         align-items: center;
         flex-direction: column;
@@ -108,10 +114,24 @@
         vertical-align: middle;
     }
 
+    .form-grid {
+        opacity: 0;
+        animation-name: fadeInUp;
+        animation-duration: 0.5s;
+        animation-fill-mode: forwards;
+        animation-delay: 0.5s;
+    }
+
     .logo {
         margin-bottom: 50;
         height: 200;
         font-weight: bold;
+        font-size: 18;
+        opacity: 0;
+        animation-name: fadeInDown;
+        animation-duration: 0.5s;
+        animation-fill-mode: forwards;
+        animation-delay: 0.5s;
     }
 
     .input-field {
@@ -136,6 +156,11 @@
 
     .btn-primary {
         margin: 30 5 15 5;
+        opacity: 0;
+        animation-name: bounceIn;
+        animation-duration: 0.5s;
+        animation-fill-mode: forwards;
+        animation-delay: 1.5s;
     }
 
     .login-label {
