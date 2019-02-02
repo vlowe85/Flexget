@@ -19,7 +19,7 @@
 	<uses-permission android:name="android.permission.INTERNET"/>
 
 	<application
-		android:name="com.tns.NativeScriptApplication"
+		android:name="uk.co.vlowe.flexgetapp"
         android:usesCleartextTraffic="true"
 		android:allowBackup="true"
 		android:icon="@drawable/icon"

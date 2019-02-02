@@ -10,7 +10,7 @@
     },
     "description": "Flexget Client",
     "license": "SEE LICENSE IN <your-license-filename>",
-    "repository": "<fill-your-repository-here>",
+    "repository": "https://github.com/vlowe85/Flexget",
     "dependencies": {
         "animate.css": "^3.7.0",
         "axios": "^0.18.0",
