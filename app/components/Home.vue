@@ -38,13 +38,19 @@
                                     <CardView v-for="item in history" :key="item.id" margin="5" height="162dp" width="108dp" backgroundColor="transparent"
                                               elevation="40" radius="5" verticalAlignment="center" @tap="showDetails(item)">
                                         <StackLayout>
-                                            <ImageCacheIt v-show="item.poster_url.length > 0" :imageUri="item.poster_url"
-                                                   stretch="aspectFill" height="162dp" borderRadius="5"></ImageCacheIt>
-                                            <StackLayout horizontalAlignment="left" marginLeft="5"
-                                                         verticalAlignment="center">
-                                                <Label fontSize="18" class="font-weight-normal" horizontalAlignment="left"
-                                                       color="#FFFFFF" :text="item.title"></Label>
-                                            </StackLayout>
+                                            <GridLayout rows="*" columns="*">
+                                                <ImageCacheIt :ios:imageUri="item.poster_url && item.poster_url.length > 0 ? item.poster_url : '~/assets/images/20_dark.png'"
+                                                              :android:imageUri="item.poster_url && item.poster_url.length > 0 ? item.poster_url : '~/assets/images/transparent.png'"
+                                                              placeHolder="~/assets/images/20_dark.png"
+                                                              errorHolder="~/assets/images/20_dark.png"
+                                                              stretch="aspectFill"
+                                                              borderRadius="5"
+                                                              row="0" col="0"
+                                                              height="162dp">
+                                                </ImageCacheIt>
+                                                <Label row="0" col="0" v-show="!item.poster_url || !item.poster_url.length" fontSize="10" padding="5" class="font-weight-normal"
+                                                       horizontalAlignment="left" verticalAlignment="top" color="#FFFFFF" :text="item.title" textWrap="true"></Label>
+                                            </GridLayout>
                                         </StackLayout>
                                     </CardView>
 
@@ -54,9 +60,13 @@
 
                             <StackLayout v-show="popularItem" backgroundColor="#FFFFFF" class="popularAnim"
                                          borderRadius="5" margin="10" @tap="showDetails(popularItem)">
-                                <ImageCacheIt v-show="popularItem" :imageUri="popularItem ? popularItem.backdrop_url : ''"
-                                       stretch="aspectFill" height="162dp" borderTopLeftRadius="5" borderTopRightRadius="5"></ImageCacheIt>
-
+                                <ImageCacheIt :imageUri="popularItem ? popularItem.backdrop_url : ''"
+                                              placeHolder="~/assets/images/flexget_logo.png"
+                                              borderTopRightRadius="5"
+                                              borderTopLeftRadius="5"
+                                              stretch="fill"
+                                              height="162dp">
+                                </ImageCacheIt>
                                 <GridLayout columns="auto,*,auto" rows="auto, auto">
                                     <GridLayout col="0" row="0" columns="auto,*" rows="auto">
                                         <Image col="0" row="0" src="~/assets/images/icons/love.png" height="12" marginLeft="10" marginTop="10"></Image>

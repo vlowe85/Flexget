@@ -4,7 +4,14 @@
             <ScrollView top="0" left="0" height="100%" width="100%">
                 <GridLayout rows="auto, *">
                     <GridLayout row="0" verticalAlignment="top" height="300">
-                        <Image :src="item.backdrop_url" marginTop="-40" verticalAlignment="top" width="100%" stretch="aspectFill"></Image>
+                        <ImageCacheIt :imageUri="item.backdrop_url && item.backdrop_url.length > 0 ? item.backdrop_url : '~/assets/images/transparent.png'"
+                                      verticalAlignment="top"
+                                      stretch="aspectFill"
+                                      resize="620,500"
+                                      marginTop="-40"
+                                      width="100%">
+                        </ImageCacheIt>
+                        <!--<Image :src="item.backdrop_url" marginTop="-40" verticalAlignment="top" height="500" width="100%" stretch="aspectFill"></Image>-->
                         <GridLayout  rows="auto, *, auto, auto, auto"
                                     columns="auto, *, auto" padding="15 10" height="100%"
                                     style="background: linear-gradient(to bottom, #253a46, rgba(0,0,0,0), rgba(0,0,0,0))">
@@ -49,9 +56,9 @@
                                 <StackLayout orientation="horizontal">
                                     <GridLayout rows="auto, auto, auto" v-for="actor in cast" :key="actor.id"
                                                 marginRight="15">
-                                        <Image borderRadius="5%" row="0"
-                                               :src="actor.profile_path ? 'https://image.tmdb.org/t/p/w200'+actor.profile_path : 'https://via.placeholder.com/100/3A6073/FFFFFF?text=N/A'"
-                                               height="100" width="100" stretch="aspectFill"></Image>
+                                        <ImageCacheIt borderRadius="5%" row="0"
+                                                      :imageUri="actor.profile_path ? 'https://image.tmdb.org/t/p/w200'+actor.profile_path : 'https://via.placeholder.com/100/3A6073/FFFFFF?text=N/A'"
+                                                      height="100" width="100" stretch="aspectFill"></ImageCacheIt>
                                         <Label row="1" fontSize="14" color="#fff"
                                                :text="actor.name"></Label>
                                         <Label row="2" fontSize="11" color="#fff"
@@ -67,8 +74,15 @@
                             </GridLayout>
                             <Label v-if="ep.overview.length > 0" marginTop="5" class="details--synopsis" color="#FFFFFF"
                                    :text="ep.overview" textWrap="true" letterSpacing="0.02" lineHeight="2"></Label>
-                            <Image :src="'https://image.tmdb.org/t/p/original'+ep.still_path" marginTop="5" marginLeft="-10" marginRight="-10"
-                                    width="calc(100% +20px)" stretch="aspectFill"></Image>
+                            <ImageCacheIt v-show="ep.still_path" :imageUri="ep.still_path && ep.still_path.length > 0 ? 'https://image.tmdb.org/t/p/original'+ep.still_path : '~/assets/images/20_dark.png'"
+                                          ios:width="calc(100% +20px)"
+                                          android:width="100%"
+                                          marginRight="-10"
+                                          marginLeft="-10"
+                                          stretch="fill"
+                                          marginTop="5"
+                                          height="250">
+                            </ImageCacheIt>
                         </StackLayout>
 
                         <StackLayout marginTop="15" >

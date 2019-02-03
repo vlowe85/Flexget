@@ -66,10 +66,25 @@ export default {
                 release_date: data.data.release_date,
             });
         },
+        updateHistoryItem(state, data) {
+            let item = state.items.find(element => element.flexget_id === data.flexget_id);
+            item.tmdb_id = data.data.tmdb_id;
+            item.backdrop_url = data.data.backdrop_url;
+            item.poster_url = data.data.poster_url;
+            item.media_type = data.data.media_type;
+            item.overview = data.data.overview;
+            item.popularity = data.data.popularity;
+            item.vote_average = data.data.vote_average;
+            item.vote_count = data.data.vote_count;
+            item.release_date = data.data.release_date;
+        },
     },
     getters: {
         allHistory(state) {
             return state.items;
+        },
+        historyWithNoInfo(state) {
+            return state.items.filter(item => item.poster_url === null);
         },
         mostPopularRecently(state, getters, rootState) {
             let items = getters.latestDownloads.slice(0);
@@ -177,6 +192,49 @@ export default {
             }, error => {
                 console.log("DB: Select error - ", error);
             });
-        }
+        },
+        updateMovieDb({state, dispatch, getters, rootState}) {
+            return new Promise((resolve, reject) => {
+                let items = getters.historyWithNoInfo;
+                console.log("Got " + items.length + " items to update");
+                items.forEach(item => {
+                    movieDb
+                        .search("multi", {
+                            query: item.parsed_title,
+                        })
+                        .then(response => {
+                            if (response.data.results.length > 0) {
+                                let data = response.data.results[0],
+                                    download = {};
+                                download.tmdb_id = data.id;
+                                download.backdrop_url = "https://image.tmdb.org/t/p/w500" + data.backdrop_path;
+                                download.poster_url = "https://image.tmdb.org/t/p/w200" + data.poster_path;
+                                download.media_type = data.media_type;
+                                download.overview = data.overview;
+                                download.popularity = data.popularity;
+                                download.vote_average = data.vote_average;
+                                download.vote_count = data.vote_count;
+                                download.release_date = data.release_date ? data.release_date : data.first_air_date;
+                                download.flexget_id = item.flexget_id;
+                                console.log("Updating " + item.parsed_title);
+                                dispatch("updateHistory", download);
+                            }
+                            console.log("Unable to update " + item.parsed_title);
+                        })
+                        .catch(error => {
+                            console.log("tMDB multi search: " + error);
+                            reject(error);
+                        });
+                });
+                resolve();
+            });
+        },
+        updateHistory({state, commit, rootState}, data) {
+            rootState.database.execSQL("UPDATE history SET tmdb_id = ?, backdrop_url = ?, poster_url = ?, media_type = ?, overview = ?, popularity = ?, vote_average = ?, vote_count = ?, release_date = ? WHERE flexget_id = ?", Object.values(data)).then(id => {
+                commit("updateHistoryItem", { data: data });
+            }, error => {
+                console.log("DB: Update error - ", error);
+            });
+        },
     }
 }

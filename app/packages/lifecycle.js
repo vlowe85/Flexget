@@ -24,7 +24,9 @@ export default function (Vue)  {
                             .then((response2) => {
                                 vm.$settings.setString("api-version", response2.headers['api-version']);
                                 vm.$store.dispatch('getHistory').then(() => {
-                                    vm.$store.dispatch('queryHistory');
+                                    vm.$store.dispatch('updateMovieDb').then(() => {
+                                        vm.$store.dispatch('queryHistory');
+                                    });
                                 });
                             })
                             .catch((error) => {
@@ -70,7 +72,9 @@ export default function (Vue)  {
                             .then((response2) => {
                                 vm.$settings.setString("api-version", response2.headers['api-version']);
                                 vm.$store.dispatch('getHistory').then(() => {
-                                    vm.$store.dispatch('queryHistory');
+                                    vm.$store.dispatch('updateMovieDb').then(() => {
+                                        vm.$store.dispatch('queryHistory');
+                                    });
                                 });
                             })
                             .catch((error) => {

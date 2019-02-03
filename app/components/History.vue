@@ -20,12 +20,24 @@
                         <StackLayout width="95%" marginTop="15" backgroundColor="#FFFFFF" borderRadius="5" paddingTop="5">
                             <ListView ref="listView" for="item in listViewData" @itemTap="onItemTap" @loadMoreItems="onLoadMoreItems">
                                 <v-template>
-                                    <GridLayout columns="auto,*" rows="*, *" paddingLeft="10" paddingTop="5" paddingBottom="5" paddingRight="5">
-                                        <Image col="0" row="0" v-show="item.poster_url && item.poster_url.length > 0" :src="item.poster_url" marginRight="10"
-                                               stretch="aspectFill" height="100" borderRadius="5" rowSpan="2"></Image>
+                                    <GridLayout columns="auto,*" rows="*, *, *, *" paddingLeft="10" paddingTop="5" paddingBottom="5" paddingRight="5">
+                                        <ImageCacheIt col="0" row="0"
+                                                      :imageUri="item.poster_url && item.poster_url.length > 0 ? item.poster_url : '~/assets/images/thumbnail_placeholder.jpg'"
+                                                      stretch="aspectFill"
+                                                      borderRadius="5"
+                                                      marginRight="10"
+                                                      height="100"
+                                                      width="70"
+                                                      rowSpan="4">
+                                        </ImageCacheIt>
                                         <Label col="1" row="0" fontSize="11" class="font-weight-normal"
                                                :text="item.title" textWrap="true" verticalAlignment="top"></Label>
-                                        <Label col="1" row="1" fontSize="10" class="font-weight-normal" :text="readableDate(item)" textWrap="true"></Label>
+                                        <Label col="1" row="1" fontSize="10" class="font-weight-normal" :text="item.task"
+                                               textWrap="true"></Label>
+                                        <Label col="1" row="2" fontSize="10" class="font-weight-normal" :text="item.details"
+                                               textWrap="true"></Label>
+                                        <Label col="1" row="3" fontSize="10" class="font-weight-normal" :text="readableDate(item)"
+                                               textWrap="true"></Label>
                                     </GridLayout>
                                 </v-template>
                             </ListView>
