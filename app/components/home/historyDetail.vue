@@ -81,7 +81,7 @@
                                           marginLeft="-10"
                                           stretch="fill"
                                           marginTop="5"
-                                          height="250">
+                                          height="200">
                             </ImageCacheIt>
                         </StackLayout>
 

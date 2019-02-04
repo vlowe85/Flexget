@@ -86,6 +86,30 @@
                                        color="#2c3e50" :text="popularItem ? popularItem.overview : ''"></Label>
                             </StackLayout>
 
+                            <StackLayout backgroundColor="#FFFFFF" borderRadius="5" margin="10">
+                                <Label fontSize="16" class="font-weight-normal" text="Upcoming Episodes" color="#2c3e50" margin="10"></Label>
+                                <GridLayout columns="auto,*" rows="*, *, *, *" v-for="item in upcomingEpisodes"
+                                            paddingLeft="10" paddingTop="5" paddingBottom="5" paddingRight="5">
+                                    <ImageCacheIt col="0" row="0"
+                                                  :imageUri="item.backdrop_url && item.backdrop_url.length > 0 ? item.backdrop_url : '~/assets/images/thumbnail_placeholder.jpg'"
+                                                  stretch="aspectFill"
+                                                  borderRadius="5"
+                                                  marginRight="10"
+                                                  height="50"
+                                                  width="70"
+                                                  rowSpan="4">
+                                    </ImageCacheIt>
+                                    <Label col="1" row="0" fontSize="11" class="font-weight-normal"
+                                           :text="item.name+' Season '+item.next_season_number+' Episode '+item.next_episode_number" textWrap="true" verticalAlignment="top"></Label>
+                                    <Label col="1" row="1" fontSize="10" class="font-weight-normal" :text="item.next_episode_name"
+                                           textWrap="true"></Label>
+                                    <!--<Label col="1" row="2" fontSize="10" class="font-weight-normal" :text="item.details"-->
+                                           <!--textWrap="true"></Label>-->
+                                    <Label col="1" row="3" fontSize="10" class="font-weight-normal" :text="readableDate(item.next_air_date)"
+                                           textWrap="true"></Label>
+                                </GridLayout>
+                            </StackLayout>
+
                         </StackLayout>
                     </ScrollView>
                 </PullToRefresh>
@@ -112,6 +136,9 @@
             popularItemDate() {
                 return this.popularItem ? this.popularItem.release_date ?
                     moment(this.popularItem.release_date, "YYYY-MM-DD").format("Do MMM YYYY") : this.popularItem.first_air_date : '';
+            },
+            upcomingEpisodes() {
+                return this.$store.getters.upcomingEpisodes;
             }
         },
         mounted() {
@@ -125,13 +152,13 @@
             }, 1000);
         },
         methods: {
+            readableDate(date) {
+                let parsedDate = moment(date);
+                return "airs on "+parsedDate.format('Do MMM YYYY') + " "+parsedDate.fromNow();
+            },
             lottieLoaded(args) {
                 this.anim = args.object;
                 this.anim.playAnimation();
-                console.log(this.anim.isAnimating());
-                console.log(this.anim.duration);
-                console.log(this.anim.progress);
-                console.log(this.anim.speed);
                 this.anim.playAnimation();
             },
             refresh(args) {

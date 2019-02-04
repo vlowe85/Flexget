@@ -28,6 +28,11 @@ export default function (Vue)  {
                                         vm.$store.dispatch('queryHistory');
                                     });
                                 });
+                                vm.$store.dispatch('getSeriesList').then(() => {
+                                    vm.$store.dispatch('updateSeriesList').then(() => {
+                                        vm.$store.dispatch('querySeries');
+                                    });
+                                });
                             })
                             .catch((error) => {
                                 console.log(error);
@@ -74,6 +79,11 @@ export default function (Vue)  {
                                 vm.$store.dispatch('getHistory').then(() => {
                                     vm.$store.dispatch('updateMovieDb').then(() => {
                                         vm.$store.dispatch('queryHistory');
+                                    });
+                                });
+                                vm.$store.dispatch('getSeriesList').then(() => {
+                                    vm.$store.dispatch('updateSeriesList').then(() => {
+                                        vm.$store.dispatch('querySeries');
                                     });
                                 });
                             })

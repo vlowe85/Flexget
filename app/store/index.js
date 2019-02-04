@@ -3,6 +3,7 @@ import Vue from 'nativescript-vue';
 
 // Import vuex modules
 import user from './modules/user';
+import series from './modules/series';
 import history from './modules/history';
 
 const Sqlite = require('nativescript-sqlite');
@@ -14,6 +15,7 @@ const dbName = "flexget.db";
 const store = new Vuex.Store({
     modules: {
         user,
+        series,
         history,
     },
     state: {
@@ -55,6 +57,12 @@ const store = new Vuex.Store({
                     db.execSQL("CREATE TABLE IF NOT EXISTS history (id INTEGER PRIMARY KEY AUTOINCREMENT, flexget_id INTEGER UNIQUE, task TEXT, details TEXT, dl_time TEXT, title TEXT, season TEXT, episode TEXT, parsed_title TEXT,dl_year TEXT, quality TEXT, dl_group TEXT, resolution TEXT, codec TEXT, tmdb_id INTEGER, backdrop_url TEXT, poster_url TEXT, media_type TEXT, overview TEXT, popularity TEXT, vote_average TEXT, vote_count TEXT, release_date TEXT)").then(id => {
                         // console.log("DB: History table created");
                         dispatch('queryHistory');
+                    }, error => {
+                        console.log("DB: Create table error - ", error);
+                    });
+                    db.execSQL("CREATE TABLE IF NOT EXISTS series (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, tmdb_id INTEGER, poster_url TEXT, backdrop_url TEXT, last_air_date TEXT, next_air_date TEXT, next_season_number INTEGER, next_episode_number INTEGER, next_episode_name TEXT)").then(id => {
+                        // console.log("DB: Series table created");
+                        dispatch('querySeries');
                     }, error => {
                         console.log("DB: Create table error - ", error);
                     });
