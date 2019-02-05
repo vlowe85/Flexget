@@ -12,6 +12,7 @@ Vue.registerElement('CardView', () => require('nativescript-cardview').CardView)
 Vue.registerElement('LottieView', () => require('nativescript-lottie').LottieView);
 Vue.registerElement('ImageCacheIt', () => require('nativescript-image-cache-it').ImageCacheIt);
 Vue.registerElement('PullToRefresh', () => require('nativescript-pulltorefresh').PullToRefresh);
+Vue.registerElement('KeyboardToolbar', () => require('nativescript-keyboard-toolbar').Toolbar);
 //Vue.registerElement("PreviousNextView", () => require("nativescript-iqkeyboardmanager").PreviousNextView);
 
 // Set up routes as a prototype to use throughout the app.

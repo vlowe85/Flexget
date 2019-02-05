@@ -64,7 +64,7 @@
                                               placeHolder="~/assets/images/flexget_logo.png"
                                               borderTopRightRadius="5"
                                               borderTopLeftRadius="5"
-                                              stretch="fill"
+                                              stretch="aspectFill"
                                               height="162dp">
                                 </ImageCacheIt>
                                 <GridLayout columns="auto,*,auto" rows="auto, auto">
@@ -86,7 +86,7 @@
                                        color="#2c3e50" :text="popularItem ? popularItem.overview : ''"></Label>
                             </StackLayout>
 
-                            <StackLayout backgroundColor="#FFFFFF" borderRadius="5" margin="10">
+                            <StackLayout v-show="upcomingEpisodes.length > 0" backgroundColor="#FFFFFF" borderRadius="5" margin="10">
                                 <Label fontSize="16" class="font-weight-normal" text="Upcoming Episodes" color="#2c3e50" margin="10"></Label>
                                 <GridLayout columns="auto,*" rows="*, *, *, *" v-for="item in upcomingEpisodes"
                                             paddingLeft="10" paddingTop="5" paddingBottom="5" paddingRight="5">
@@ -148,6 +148,9 @@
             setTimeout(() => {
                 this.$store.dispatch('getHistory').then(() => {
                     this.$store.dispatch('queryHistory');
+                });
+                this.$store.dispatch('getSeriesList').then(() => {
+                    this.$store.dispatch('querySeries');
                 });
             }, 1000);
         },
