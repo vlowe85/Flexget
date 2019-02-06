@@ -64,7 +64,8 @@
                                               placeHolder="~/assets/images/flexget_logo.png"
                                               borderTopRightRadius="5"
                                               borderTopLeftRadius="5"
-                                              stretch="aspectFill"
+                                              stretch="fill"
+                                              width="100%"
                                               height="162dp">
                                 </ImageCacheIt>
                                 <GridLayout columns="auto,*,auto" rows="auto, auto">
