@@ -34,7 +34,7 @@ export default {
                 backdrop_url: data.data.backdrop_url,
                 last_air_date: data.data.last_air_date,
                 next_air_date: data.data.next_air_date,
-                next_season_number: data.data.season,
+                next_season_number: data.data.next_season_number,
                 next_episode_number: data.data.next_episode_number,
                 next_episode_name: data.data.next_episode_name
             });

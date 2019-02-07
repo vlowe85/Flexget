@@ -33,7 +33,7 @@
                                 <!--<LottieView height="130" width="auto" src="lottie-action.json" :autoplay="true" :loop="true" @loaded="lottieLoaded"></LottieView>-->
                             <!--</StackLayout>-->
 
-                            <ScrollView v-show="history.length > 0" orientation="horizontal" scrollBarIndicatorVisible="false" class="fadeInDown">
+                            <ScrollView v-if="!preview" v-show="history.length > 0" orientation="horizontal" scrollBarIndicatorVisible="false" class="fadeInDown">
                                 <StackLayout orientation="horizontal">
                                     <CardView v-for="item in history" :key="item.id" margin="5" height="162dp" width="108dp" backgroundColor="transparent"
                                               elevation="40" radius="5" verticalAlignment="center" @tap="showDetails(item)">
@@ -53,12 +53,10 @@
                                             </GridLayout>
                                         </StackLayout>
                                     </CardView>
-
                                 </StackLayout>
                             </ScrollView>
 
-
-                            <StackLayout v-show="popularItem" backgroundColor="#FFFFFF" class="popularAnim"
+                            <StackLayout v-if="!preview" v-show="popularItem" backgroundColor="#FFFFFF" class="popularAnim"
                                          borderRadius="5" margin="10" @tap="showDetails(popularItem)">
                                 <ImageCacheIt :imageUri="popularItem ? popularItem.backdrop_url : ''"
                                               placeHolder="~/assets/images/flexget_logo.png"
@@ -87,7 +85,7 @@
                                        color="#2c3e50" :text="popularItem ? popularItem.overview : ''"></Label>
                             </StackLayout>
 
-                            <StackLayout v-show="upcomingEpisodes.length > 0" backgroundColor="#FFFFFF" borderRadius="5" margin="10">
+                            <StackLayout v-if="!preview" v-show="upcomingEpisodes.length > 0" backgroundColor="#FFFFFF" borderRadius="5" margin="10">
                                 <Label fontSize="16" class="font-weight-normal" text="Upcoming Episodes" color="#2c3e50" margin="10"></Label>
                                 <GridLayout columns="auto,*" rows="*, *, *, *" v-for="item in upcomingEpisodes"
                                             paddingLeft="10" paddingTop="5" paddingBottom="5" paddingRight="5">
@@ -101,12 +99,75 @@
                                                   rowSpan="4">
                                     </ImageCacheIt>
                                     <Label col="1" row="0" fontSize="11" class="font-weight-normal"
-                                           :text="item.name+' Season '+item.next_season_number+' Episode '+item.next_episode_number" textWrap="true" verticalAlignment="top"></Label>
+                                           :text="upcomingEpisodeName(item)" textWrap="true" verticalAlignment="top"></Label>
                                     <Label col="1" row="1" fontSize="10" class="font-weight-normal" :text="item.next_episode_name"
                                            textWrap="true"></Label>
                                     <!--<Label col="1" row="2" fontSize="10" class="font-weight-normal" :text="item.details"-->
                                            <!--textWrap="true"></Label>-->
                                     <Label col="1" row="3" fontSize="10" class="font-weight-normal" :text="readableDate(item.next_air_date)"
+                                           textWrap="true"></Label>
+                                </GridLayout>
+                            </StackLayout>
+
+                            <ScrollView v-if="preview" orientation="horizontal" scrollBarIndicatorVisible="false" class="fadeInDown">
+                                <StackLayout orientation="horizontal">
+                                    <CardView margin="5" height="162dp" width="108dp" backgroundColor="transparent" elevation="40" radius="5" verticalAlignment="center" @tap="showDetails(previewItem)">
+                                        <StackLayout>
+                                            <GridLayout rows="*" columns="*">
+                                                <Image src="~/assets/images/samples/sample1.jpg" stretch="aspectFill" borderRadius="5" row="0" col="0" height="162dp"></Image>
+                                            </GridLayout>
+                                        </StackLayout>
+                                    </CardView>
+                                    <CardView margin="5" height="162dp" width="108dp" backgroundColor="transparent" elevation="40" radius="5" verticalAlignment="center" >
+                                        <StackLayout>
+                                            <GridLayout rows="*" columns="*">
+                                                <Image src="~/assets/images/samples/sample2.jpg" stretch="aspectFill" borderRadius="5" row="0" col="0" height="162dp"></Image>
+                                            </GridLayout>
+                                        </StackLayout>
+                                    </CardView>
+                                    <CardView margin="5" height="162dp" width="108dp" backgroundColor="transparent" elevation="40" radius="5" verticalAlignment="center" >
+                                        <StackLayout>
+                                            <GridLayout rows="*" columns="*">
+                                                <Image src="~/assets/images/samples/sample3.jpg" stretch="aspectFill" borderRadius="5" row="0" col="0" height="162dp"></Image>
+                                            </GridLayout>
+                                        </StackLayout>
+                                    </CardView>
+                                    <CardView margin="5" height="162dp" width="108dp" backgroundColor="transparent" elevation="40" radius="5" verticalAlignment="center" >
+                                        <StackLayout>
+                                            <GridLayout rows="*" columns="*">
+                                                <Image src="~/assets/images/samples/sample4.jpg" stretch="aspectFill" borderRadius="5" row="0" col="0" height="162dp"></Image>
+                                            </GridLayout>
+                                        </StackLayout>
+                                    </CardView>
+                                </StackLayout>
+                            </ScrollView>
+                            <StackLayout v-if="preview" backgroundColor="#FFFFFF" class="popularAnim" borderRadius="5" margin="10">
+                                <Image src="https://image.tmdb.org/t/p/w500/jixekHe0lX093eZHUe5wqKM8SOR.jpg"
+                                       borderTopRightRadius="5" borderTopLeftRadius="5" stretch="fill" width="100%" height="162dp">
+                                </Image>
+                                <GridLayout columns="auto,*,auto" rows="auto, auto">
+                                    <GridLayout col="0" row="0" columns="auto,*" rows="auto">
+                                        <Image col="0" row="0" src="~/assets/images/icons/love.png" height="12" marginLeft="10" marginTop="10"></Image>
+                                        <Label col="1" row="0" fontSize="12" class="font-weight-normal" horizontalAlignment="left" marginLeft="5" marginTop="10" color="#2c3e50" text="popular"></Label>
+                                    </GridLayout>
+                                    <Label col="2" row="0" class="font-weight-normal" marginTop="10" marginRight="20" fontSize="12" color="#2c3e50" horizontalAlignment="right" text="release date"></Label>
+                                    <Label col="0" row="1" fontSize="16" class="font-weight-normal" horizontalAlignment="left" marginLeft="10" color="#2c3e50" text="Night of the Living Dead"></Label>
+                                    <Label col="2" row="1" class="font-weight-normal" horizontalAlignment="right" marginRight="20" fontSize="14" color="#2c3e50" text="1st Oct 1968"></Label>
+                                </GridLayout>
+                                <Label fontSize="12" class="font-weight-normal" horizontalAlignment="left" margin="10" textWrap="true"
+                                       color="#2c3e50" text="A group of people try to survive an attack of bloodthirsty zombies while trapped in a rural Pennsylvania farmhouse. Although not the first zombie film, NIGHT OF THE LIVING DEAD is the progenitor of the contemporary 'zombie apocalypse' horror film, and it greatly influenced the modern pop-culture zombie archetype."></Label>
+                            </StackLayout>
+                            <StackLayout v-if="preview" backgroundColor="#FFFFFF" borderRadius="5" margin="10">
+                                <Label fontSize="16" class="font-weight-normal" text="Upcoming Episodes" color="#2c3e50" margin="10"></Label>
+                                <GridLayout columns="auto,*" rows="*, *, *, *" paddingLeft="10" paddingTop="5" paddingBottom="5" paddingRight="5">
+                                    <Image col="0" row="0" src="https://image.tmdb.org/t/p/w500/sJ1fAfbEkUwp7f6n7atpIdRdyQO.jpg"
+                                           stretch="aspectFill" borderRadius="5" marginRight="10" height="50" width="70" rowSpan="4">
+                                    </Image>
+                                    <Label col="1" row="0" fontSize="11" class="font-weight-normal"
+                                           text="Victory at Sea" textWrap="true" verticalAlignment="top"></Label>
+                                    <Label col="1" row="1" fontSize="10" class="font-weight-normal" text="Documentary"
+                                           textWrap="true"></Label>
+                                    <Label col="1" row="3" fontSize="10" class="font-weight-normal" text="26th Oct 1952"
                                            textWrap="true"></Label>
                                 </GridLayout>
                             </StackLayout>
@@ -156,6 +217,12 @@
             }, 1000);
         },
         methods: {
+            upcomingEpisodeName(item) {
+                let name = item.name;
+                if (item.next_season_number) name += " Season "+item.next_season_number;
+                if (item.next_episode_number) name += " Episode "+item.next_episode_number;
+                return name;
+            },
             readableDate(date) {
                 let parsedDate = moment(date);
                 return "airs on "+parsedDate.format('Do MMM YYYY') + " "+parsedDate.fromNow();
@@ -176,6 +243,18 @@
         data() {
             return {
                 anim: null,
+                preview: false,
+                previewItem : {
+                    backdrop_url:"https://3.bp.blogspot.com/-pJCxoId8Gbs/Wfa2TdbUucI/AAAAAAABzps/rlCod9NqLfwlJmVGlUh1TzHhmlDb8QtTgCLcBGAs/s1600/savage%2Bgirl%2Bmovie%2B2.png",
+                    codec:null, details:"Accepted by imdb", dl_group:null, dl_time:"2019-02-05T18:27:25.234730",
+                    dl_year:"1932", episode:null, flexget_id:999, id:5, media_type:"movie",
+                    overview:"A white jungle goddess is protected by a fierce killer gorilla.",
+                    parsed_title:"The Savage Girl", popularity:"201.624",
+                    poster_url:"https://image.tmdb.org/t/p/w200/gOLLwNv1SdmJSFS1X4UzJ9aBycY.jpg",
+                    quality:"WEB-DL", release_date:"1932-12-01", resolution:"1080p", season:null,
+                    task:"torrentleech", title:"The Savage Girl 1932 1080p AMZN WEB-DL DDP5 1 H 264-NTG",
+                    tmdb_id:158766, vote_average:"6.9", vote_count:"344",
+                }
             }
         }
     };
