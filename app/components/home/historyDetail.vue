@@ -4,13 +4,15 @@
             <ScrollView top="0" left="0" height="100%" width="100%">
                 <GridLayout rows="auto, *">
                     <GridLayout row="0" verticalAlignment="top" height="300">
-                        <ImageCacheIt :imageUri="item.backdrop_url && item.backdrop_url.length > 0 ? item.backdrop_url : '~/assets/images/transparent.png'"
+                        <ImageCacheIt :imageUri="hasPoster(item) ? item.backdrop_url : '~/assets/images/transparent.png'"
                                       verticalAlignment="top"
                                       stretch="aspectFill"
                                       resize="620,500"
                                       marginTop="-40"
                                       width="100%">
                         </ImageCacheIt>
+                        <Label v-show="!hasPoster(item)" fontSize="11" class="font-weight-normal" color="#FFFFFF"
+                               text="No Image Available" textWrap="true" verticalAlignment="center" horizontalAlignment="center"></Label>
                         <!--<Image :src="item.backdrop_url" marginTop="-40" verticalAlignment="top" height="500" width="100%" stretch="aspectFill"></Image>-->
                         <GridLayout  rows="auto, *, auto, auto, auto"
                                     columns="auto, *, auto" padding="15 10" height="100%"
@@ -35,7 +37,7 @@
                                 <Label v-show="item.codec" padding="5 15" marginRight="2.5" color="#fff"
                                        :text="item.codec" class="round-corners"></Label>
                             </StackLayout>
-                            <Label row="4" col="0"
+                            <Label row="4" col="0" textWrap="true"
                                 colSpan="3" color="#fff" fontSize="15" :text="item.details"
                                 opacity="0.6" marginTop="5"></Label>
                         </GridLayout>
@@ -46,7 +48,7 @@
                             <Label v-show="language.length > 0" col="2" padding="3 10" textAlignment="right" class="round-corners"
                                    color="#FFF" :text="language.toUpperCase()"></Label>
                         </GridLayout>
-                        <Label marginTop="5" class="details--synopsis" color="#FFFFFF" :text="item.overview"
+                        <Label marginTop="5" class="details--synopsis" color="#FFFFFF" :text="item.overview ? item.overview : 'No data available'"
                                textWrap="true" letterSpacing="0.02" lineHeight="2"></Label>
 
                         <Label marginTop="15" textAlignment="left" class="details--title" text="Cast"></Label>
@@ -66,6 +68,8 @@
                                     </GridLayout>
                                 </StackLayout>
                             </ScrollView>
+                            <Label v-show="cast.length === 0 && !loading" marginTop="5" class="details--synopsis" color="#FFFFFF" text="No data available"
+                                   textWrap="true" letterSpacing="0.02" lineHeight="2"></Label>
                         </StackLayout>
 
                         <StackLayout marginTop="15" v-for="ep in episode" :key="ep.id">
@@ -126,8 +130,10 @@
             movieDb.details(this.item.media_type, this.item.tmdb_id).then(response => {
                 this.cast = response.data.credits.cast;
                 this.language = response.data.original_language;
+                this.loading = false;
             }).catch(error => {
                 console.log(error);
+                this.loading = false;
             });
             if(this.item.season) {
                 movieDb.episode(this.item.tmdb_id, this.item.season, this.item.episode).then(response => {
@@ -146,13 +152,16 @@
             }
         },
         methods: {
-            //
+            hasPoster(item) {
+                return item.poster_url && item.poster_url.length > 0 && !item.poster_url.endsWith('null');
+            },
         },
         data() {
             return {
                 cast: [],
                 episode: [],
                 language: "",
+                loading: true,
             }
         }
     };

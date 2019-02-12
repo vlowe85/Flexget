@@ -28,9 +28,11 @@ export default function (Vue)  {
                                         vm.$store.dispatch('queryHistory');
                                     });
                                 });
-                                vm.$store.dispatch('getSeriesList').then(() => {
-                                    vm.$store.dispatch('updateSeriesList').then(() => {
-                                        vm.$store.dispatch('querySeries');
+                                vm.$store.dispatch('querySeries').then(() => {
+                                    vm.$store.dispatch('getSeriesList').then(() => {
+                                        vm.$store.dispatch('updateSeriesList').then(() => {
+                                            vm.$store.dispatch('querySeries');
+                                        });
                                     });
                                 });
                             })
@@ -81,9 +83,11 @@ export default function (Vue)  {
                                         vm.$store.dispatch('queryHistory');
                                     });
                                 });
-                                vm.$store.dispatch('getSeriesList').then(() => {
-                                    vm.$store.dispatch('updateSeriesList').then(() => {
-                                        vm.$store.dispatch('querySeries');
+                                vm.$store.dispatch('querySeries').then(() => {
+                                    vm.$store.dispatch('getSeriesList').then(() => {
+                                        vm.$store.dispatch('updateSeriesList').then(() => {
+                                            vm.$store.dispatch('querySeries');
+                                        });
                                     });
                                 });
                             })

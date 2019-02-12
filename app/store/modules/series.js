@@ -53,7 +53,9 @@ export default {
             return state.series;
         },
         upcomingEpisodes(state) {
-            let series = state.series.filter(item => item.next_air_date !== null);
+            let series = state.series.filter(item => {
+                return item.next_air_date !== null && moment(item.next_air_date, "YYYY-MM-DD").isAfter();
+            });
             series.sort(function (a, b) {
                 return moment(a.next_air_date, "YYYY-MM-DD").diff(moment(b.next_air_date, "YYYY-MM-DD"))
             });
@@ -107,7 +109,7 @@ export default {
                                 }
                             })
                             .catch(error => {
-                                console.log("tMDB multi search: "+error);
+                                console.log("Series tMDB multi search: "+error);
                                 // insert it without the movieDb data, perhaps we will try again later?
                                 // dispatch("insertHistory", download);
                             });
@@ -138,7 +140,7 @@ export default {
                             dispatch("updateSeries", series);
                         })
                         .catch(error => {
-                            console.log("tMDB multi details: "+error);
+                            console.log("Series tMDB multi details: "+error);
                         });
                 });
             });

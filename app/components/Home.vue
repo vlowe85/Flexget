@@ -5,7 +5,7 @@
 
             <StackLayout col="0" row="0" class="bottom-gradient" android:paddingTop="30">
 
-                <PullToRefresh @refresh="refresh">
+                <!--<PullToRefresh @refresh="refresh">-->
                     <ScrollView orientation="vertical">
                         <StackLayout>
 
@@ -48,7 +48,7 @@
                                                               row="0" col="0"
                                                               height="162dp">
                                                 </ImageCacheIt>
-                                                <Label row="0" col="0" v-show="!item.poster_url || !item.poster_url.length" fontSize="10" padding="5" class="font-weight-normal"
+                                                <Label row="0" col="0" v-show="!item.poster_url || !item.poster_url.length || item.poster_url.endsWith('null')" fontSize="10" padding="5" class="font-weight-normal"
                                                        horizontalAlignment="left" verticalAlignment="top" color="#FFFFFF" :text="item.title" textWrap="true"></Label>
                                             </GridLayout>
                                         </StackLayout>
@@ -64,7 +64,7 @@
                                               borderTopLeftRadius="5"
                                               stretch="fill"
                                               width="100%"
-                                              height="162dp">
+                                              height="260">
                                 </ImageCacheIt>
                                 <GridLayout columns="auto,*,auto" rows="auto, auto">
                                     <GridLayout col="0" row="0" columns="auto,*" rows="auto">
@@ -174,7 +174,7 @@
 
                         </StackLayout>
                     </ScrollView>
-                </PullToRefresh>
+                <!--</PullToRefresh>-->
             </StackLayout>
 
         </GridLayout>

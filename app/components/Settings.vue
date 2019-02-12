@@ -16,10 +16,10 @@
 
                 <ScrollView orientation="vertical" width="100%" class="main-bg" height="100%">
                     <StackLayout marginTop="15">
-                        <StackLayout orientation="horizontal" width="100%">
+                        <StackLayout orientation="horizontal" width="100%" marginBottom="20">
                             <CardView margin="10" height="50dp" width="95%" @tap="logout" backgroundColor="#FFFFFF"
-                                      elevation="40" radius="5" verticalAlignment="center">
-                                <StackLayout horizontalAlignment="left" verticalAlignment="center">
+                                      elevation="40" radius="5" verticalAlignment="center" paddingBottom="20" marginBottom="20">
+                                <StackLayout horizontalAlignment="left" verticalAlignment="center" >
                                     <Label fontSize="16" color="#000000" text="Log out" marginLeft="20"></Label>
                                 </StackLayout>
                             </CardView>

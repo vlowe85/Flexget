@@ -22,7 +22,7 @@
                                 <v-template>
                                     <GridLayout columns="auto,*" rows="*, *, *, *" paddingLeft="10" paddingTop="5" paddingBottom="5" paddingRight="5">
                                         <ImageCacheIt col="0" row="0"
-                                                      :imageUri="item.poster_url && item.poster_url.length > 0 ? item.poster_url : '~/assets/images/thumbnail_placeholder.jpg'"
+                                                      :imageUri="hasPoster(item) ? item.poster_url : '~/assets/images/thumbnail_placeholder.jpg'"
                                                       stretch="aspectFill"
                                                       borderRadius="5"
                                                       marginRight="10"
@@ -64,6 +64,9 @@
             }
         },
         methods: {
+            hasPoster(item) {
+                return item.poster_url && item.poster_url.length > 0 && !item.poster_url.endsWith('null');
+            },
             readableDate(item) {
                 return moment(item.dl_time).format('Do MMM YYYY h:mm a');
             },

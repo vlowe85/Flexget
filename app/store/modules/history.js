@@ -91,7 +91,7 @@ export default {
             items.sort((a, b) => {
                 return b.vote_average - a.vote_average;
             });
-            return items.length > 0 ? items[0] : null;
+            return items.length > 5 ? items[Math.floor(Math.random() * 5) + 1] : null;
         },
         latestDownloads(state, getters, rootState) {
             state.items.sort((a,b) => {
@@ -167,7 +167,7 @@ export default {
                                 dispatch("insertHistory", download);
                             })
                             .catch(error => {
-                                console.log("tMDB multi search: "+error);
+                                console.log("History tMDB multi search: "+error);
                                 // insert it without the movieDb data, perhaps we will try again later?
                                 // dispatch("insertHistory", download);
                             });
