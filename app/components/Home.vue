@@ -58,14 +58,8 @@
 
                             <StackLayout v-if="!preview" v-show="popularItem" backgroundColor="#FFFFFF" class="popularAnim"
                                          borderRadius="5" margin="10" @tap="showDetails(popularItem)">
-                                <ImageCacheIt :imageUri="popularItem ? popularItem.backdrop_url : ''"
-                                              placeHolder="~/assets/images/flexget_logo.png"
-                                              borderTopRightRadius="5"
-                                              borderTopLeftRadius="5"
-                                              stretch="fill"
-                                              width="100%"
-                                              height="260">
-                                </ImageCacheIt>
+                                <Image :src="popularItem ? popularItem.backdrop_url : ''" borderTopRightRadius="5" borderTopLeftRadius="5"
+                                       stretch="aspectFill" height="162dp"></Image>
                                 <GridLayout columns="auto,*,auto" rows="auto, auto">
                                     <GridLayout col="0" row="0" columns="auto,*" rows="auto">
                                         <Image col="0" row="0" src="~/assets/images/icons/love.png" height="12" marginLeft="10" marginTop="10"></Image>

@@ -25,7 +25,8 @@ let common = {
             let transitionObj = (typeof(trans) === "undefined") ? {} : trans;
             // use the manual navigation method
             this.$navigateTo(pageComponent, {
-                transition: transitionObj
+                transition: transitionObj,
+                //clearHistory: true
             });
         },
         showDetails(item) {

@@ -87,11 +87,11 @@ export default {
             return state.items.filter(item => item.poster_url === null);
         },
         mostPopularRecently(state, getters, rootState) {
-            let items = getters.latestDownloads.slice(0);
+            let items = getters.latestDownloads.slice(0, 10);
             items.sort((a, b) => {
                 return b.vote_average - a.vote_average;
             });
-            return items.length > 5 ? items[Math.floor(Math.random() * 5) + 1] : null;
+            return items.length > 0 ? items[0] : null;
         },
         latestDownloads(state, getters, rootState) {
             state.items.sort((a,b) => {
