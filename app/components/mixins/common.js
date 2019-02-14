@@ -35,6 +35,9 @@ let common = {
                 fullscreen: true,
             });
         },
+        hasPoster(item) {
+            return item.poster_url && item.poster_url.length > 0 && !item.poster_url.endsWith('null');
+        },
     },
     data() {
         return {

@@ -8,28 +8,20 @@
                 <StackLayout>
                     <GridLayout columns="auto,*" rows="auto">
                         <Image col="0" row="0" src="~/assets/images/icons/back-icon.png" marginLeft="10"
-                               stretch="aspectFill" height="20" @tap="goToPage($routes.Home, {name:'slideRight'})"></Image>
-                        <Label col="1" row="0" text="Settings" class="font-weight-normal" horizontalAlignment="center"
+                               stretch="aspectFill" height="20" @tap="goToPage($routes.Settings, {name:'slideRight'})"></Image>
+                        <Label col="1" row="0" text="Database Management" class="font-weight-normal" horizontalAlignment="center"
                                color="#FFFFFF" padding="15" fontSize="18" marginLeft="-20"></Label>
                     </GridLayout>
                 </StackLayout>
 
                 <ScrollView orientation="vertical" width="100%" class="main-bg" height="100%">
-
                     <StackLayout marginTop="15" marginLeft="5" marginRight="5">
-
-                        <Button text="Config" @tap="goToPage($routes.Config)" ios:class="settings-button"></Button>
-                        <Button text="Tasks" @tap="goToPage($routes.Tasks)" ios:class="settings-button"></Button>
-                        <Button text="Seen" @tap="goToPage($routes.Seen)" ios:class="settings-button"></Button>
-                        <Button text="Database Management" @tap="goToPage($routes.Database)" ios:class="settings-button"></Button>
-                        <Button text="Log out" @tap="logout" ios:class="settings-button"></Button>
-
-                        <StackLayout marginTop="20">
-                            <Label :text="'API Version '+$settings.getString('api-version')" horizontalAlignment="center" fontSize="12"></Label>
-                        </StackLayout>
-                        <StackLayout>
-                            <Label :text="'App Version '+version" horizontalAlignment="center" fontSize="12"></Label>
-                        </StackLayout>
+                        <Label text="Cleaning up removes all old/un-needed data from the database."
+                               textWrap="true"></Label>
+                        <Button text="Cleanup" @tap="submit('cleanup')" ios:class="settings-button"></Button>
+                        <Label text="Vacuuming potentially increases performance and decreases database size."
+                               textWrap="true"></Label>
+                        <Button text="Vacuum"  @tap="submit('vacuum')" ios:class="settings-button"></Button>
                     </StackLayout>
                 </ScrollView>
             </StackLayout>
@@ -39,6 +31,7 @@
 </template>
 
 <script>
+    import axios from "axios";
     import common from "./mixins/common";
 
     export default {
@@ -50,13 +43,27 @@
             //
         },
         methods: {
-            logout() {
-                this.$store.dispatch('logout');
-            },
+            submit(operation) {
+                axios.post(this.api+"/database", {
+                    operation: operation
+                }).then(response => {
+                    alert({
+                        title: response.data.status.charAt(0).toUpperCase() + response.data.status.slice(1),
+                        message: response.data.message,
+                        okButtonText: "Ok"
+                    });
+                }).catch(error => {
+                    alert({
+                        title: "Operation failed",
+                        message: error,
+                        okButtonText: "Ok"
+                    });
+                });
+            }
         },
         data() {
             return {
-                //
+                api: this.$store.getters.getServerUrl,
             }
         }
     };

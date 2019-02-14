@@ -35,24 +35,26 @@
 
                             <ScrollView v-if="!preview" v-show="history.length > 0" orientation="horizontal" scrollBarIndicatorVisible="false" class="fadeInDown">
                                 <StackLayout orientation="horizontal">
-                                    <CardView v-for="item in history" :key="item.id" margin="5" height="162dp" width="108dp" backgroundColor="transparent"
-                                              elevation="40" radius="5" verticalAlignment="center" @tap="showDetails(item)">
-                                        <StackLayout>
-                                            <GridLayout rows="*" columns="*">
-                                                <ImageCacheIt :ios:imageUri="item.poster_url && item.poster_url.length > 0 ? item.poster_url : '~/assets/images/20_dark.png'"
-                                                              :android:imageUri="item.poster_url && item.poster_url.length > 0 ? item.poster_url : '~/assets/images/transparent.png'"
-                                                              placeHolder="~/assets/images/20_dark.png"
-                                                              errorHolder="~/assets/images/20_dark.png"
-                                                              stretch="aspectFill"
-                                                              borderRadius="5"
-                                                              row="0" col="0"
-                                                              height="162dp">
-                                                </ImageCacheIt>
-                                                <Label row="0" col="0" v-show="!item.poster_url || !item.poster_url.length || item.poster_url.endsWith('null')" fontSize="10" padding="5" class="font-weight-normal"
-                                                       horizontalAlignment="left" verticalAlignment="top" color="#FFFFFF" :text="item.title" textWrap="true"></Label>
-                                            </GridLayout>
-                                        </StackLayout>
-                                    </CardView>
+                                    <StackLayout v-for="item in history" :key="item.id" v-if="hasPoster(item)">
+                                        <CardView margin="5" height="162dp" width="108dp" backgroundColor="transparent"
+                                                  elevation="40" radius="5" verticalAlignment="center" @tap="showDetails(item)">
+                                            <ImageCacheIt :ios:imageUri="item.poster_url && item.poster_url.length > 0 ? item.poster_url : '~/assets/images/20_dark.png'"
+                                                          :android:imageUri="item.poster_url && item.poster_url.length > 0 ? item.poster_url : '~/assets/images/transparent.png'"
+                                                          placeHolder="~/assets/images/20_dark.png"
+                                                          errorHolder="~/assets/images/20_dark.png"
+                                                          stretch="aspectFill"
+                                                          borderRadius="5"
+                                                          height="162dp">
+                                            </ImageCacheIt>
+                                        </CardView>
+                                    </StackLayout>
+                                    <StackLayout v-else>
+                                        <GridLayout rows="*" columns="*" margin="5" height="162dp" width="108dp" @tap="showDetails(item)">
+                                            <Image src="~/assets/images/20_dark.png" stretch="aspectFill" borderRadius="5" height="162dp"></Image>
+                                            <Label row="0" col="0" v-show="!item.poster_url || !item.poster_url.length || item.poster_url.endsWith('null')" fontSize="10" padding="5" class="font-weight-normal"
+                                                   horizontalAlignment="left" verticalAlignment="top" color="#FFFFFF" :text="item.title" textWrap="true"></Label>
+                                        </GridLayout>
+                                    </StackLayout>
                                 </StackLayout>
                             </ScrollView>
 
