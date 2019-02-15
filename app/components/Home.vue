@@ -14,14 +14,14 @@
                                 <Label col="0" row="0" text="Home" class="font-weight-normal"
                                        color="#ffffff" padding="10" fontSize="18"></Label>
                                 <Image col="1" row="0" horizontalAlignment="right" height="24" width="24" marginRight="10"
-                                       padding="10" @tap="goToPage($routes.Settings)" src="~/assets/images/icons/more_icon.png"></Image>
+                                       padding="10" @tap="goToPage($routes.Settings, {name:'slideLeft'})" src="~/assets/images/icons/more_icon.png"></Image>
                             </GridLayout>
 
                             <GridLayout columns="auto,*,auto" rows="auto" paddingBottom="5">
                                 <Label col="0" row="0" class="font-weight-normal"
                                        paddingLeft="10" fontSize="15" color="#ffffff"
                                        text="Latest downloads"></Label>
-                                <GridLayout col="2" row="0"  columns="auto,auto" rows="auto" @tap="goToPage($routes.History)">
+                                <GridLayout col="2" row="0"  columns="auto,auto" rows="auto" @tap="goToPage($routes.History, {name:'slideLeft'})">
                                     <Label col="0" row="0" class="font-weight-normal" marginRight="5" marginBottom="2"
                                            fontSize="14" color="#ffffff" text="History"></Label>
                                     <Image col="1" row="0" horizontalAlignment="right" height="12" marginRight="10"

@@ -14,13 +14,22 @@
                     </GridLayout>
                 </StackLayout>
 
-                <ScrollView orientation="vertical" width="100%" class="main-bg" height="100%">
-                    <StackLayout marginTop="15" marginLeft="5" marginRight="5">
-                        <GridLayout columns="*, auto, auto" rows="*" v-for="item in tasks">
-                            <Label col="0" row="0" :text="item.name" textWrap="true"></Label>
-                            <Button col="1" row="0" text="Execute" @tap="execute('item.name')"></Button>
-                            <Button col="2" row="0" text="Delete" @tap="deleteTask('item.name')"></Button>
-                        </GridLayout>
+                <ScrollView orientation="vertical">
+                    <StackLayout height="100%">
+
+                        <StackLayout width="95%" marginTop="15" backgroundColor="#FFFFFF" borderRadius="5" paddingTop="5">
+                            <ListView ref="listView" for="item in tasks" height="100%">
+                                <v-template>
+                                    <GridLayout columns="*, auto, auto" rows="*, *">
+                                        <Label col="0" row="0" padding="10" :text="item.name" textWrap="true"></Label>
+                                        <Button col="1" row="0" text="Execute" @tap="execute(item.name)"></Button>
+                                        <Button col="2" row="0" text="Delete" marginRight="5" @tap="deleteTask(item.name)"></Button>
+                                    </GridLayout>
+                                </v-template>
+                            </ListView>
+                            <ActivityIndicator ios:marginTop="-30" color="orange" :busy="loading"></ActivityIndicator>
+                        </StackLayout>
+
                     </StackLayout>
                 </ScrollView>
             </StackLayout>
@@ -41,6 +50,16 @@
         mounted() {
             axios.get(this.api+"/tasks").then(response => {
                 this.tasks = response.data;
+                axios.get(this.api+"/tasks/status").then(response2 => {
+                    response2.data.forEach(task => {
+                        let found = this.tasks.find(item => item.name === task.name);
+                        if (found) {
+                            this.$set( found, 'status', task.last_execution);
+                        }
+                    });
+                }).catch(error => {
+                    console.log(error);
+                });
             }).catch(error => {
                 console.log(error);
             });
@@ -48,7 +67,7 @@
         methods: {
             execute(task) {
                 axios.post(this.api+"/tasks/execute", {
-                    tasks: task
+                    tasks: [task]
                 }).then(response => {
                     alert({
                         title: "Success",
@@ -91,6 +110,7 @@
         data() {
             return {
                 tasks: [],
+                loading: false,
                 api: this.$store.getters.getServerUrl,
             }
         }
