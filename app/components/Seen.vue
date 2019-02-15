@@ -20,17 +20,18 @@
                         <StackLayout width="95%" marginTop="15" backgroundColor="#FFFFFF" borderRadius="5" paddingTop="5">
                             <ListView ref="listView" for="item in seenData" @loadMoreItems="onLoadMoreItems">
                                 <v-template>
-                                    <GridLayout columns="*" rows="*, *, *, *, *" paddingLeft="10" paddingTop="5" paddingBottom="5" paddingRight="5">
-                                        <Label row="0" fontSize="11" class="font-weight-normal"
+                                    <GridLayout columns="*, 80" rows="*, *, *, *, *" paddingLeft="10" paddingTop="5" paddingBottom="5" paddingRight="5">
+                                        <Label col="0" row="0" fontSize="11" class="font-weight-normal"
                                                :text="item.title" textWrap="true" verticalAlignment="top"></Label>
-                                        <Label row="1" fontSize="10" class="font-weight-normal" :text="item.task"
+                                        <Label col="0" row="1" fontSize="10" class="font-weight-normal" :text="item.task"
                                                textWrap="true"></Label>
-                                        <Label v-if="item.fields.length > 0" row="2" fontSize="10" class="font-weight-normal" :text="item.fields[0].field_name+': '+item.fields[0].value"
+                                        <Label v-if="item.fields.length > 0" col="0" row="2" fontSize="10" class="font-weight-normal" :text="item.fields[0].field_name+': '+item.fields[0].value"
                                                textWrap="true"></Label>
-                                        <Label v-if="item.fields.length === 2" row="3" fontSize="10" class="font-weight-normal" :text="item.fields[1].field_name+': '+item.fields[1].value"
+                                        <Label v-if="item.fields.length === 2" col="0" row="3" fontSize="10" class="font-weight-normal" :text="item.fields[1].field_name+': '+item.fields[1].value"
                                                textWrap="true"></Label>
-                                        <Label row="4" fontSize="10" class="font-weight-normal" :text="item.added"
+                                        <Label col="0" row="4" fontSize="10" class="font-weight-normal" :text="item.added"
                                                textWrap="true"></Label>
+                                        <Button col="1" row="0" rowSpan="5" text="Delete" marginRight="5" height="40" @tap="deleteItem(item)"></Button>
                                     </GridLayout>
                                 </v-template>
                             </ListView>
@@ -91,6 +92,31 @@
                         this.loading = false;
                     });
                 }
+            },
+            deleteItem(item) {
+                confirm({
+                    title: "Are you sure?",
+                    message: "Did you mean to delete "+item.title+"?",
+                    okButtonText: "Yes",
+                    cancelButtonText: "No"
+                }).then(result => {
+                    if(result) {
+                        axios.delete(this.api+"/seen/"+item.id).then(response => {
+                            this.seenData = this.seenData.filter(data => data.id !== item.id);
+                            alert({
+                                title: "Success",
+                                message: "Entry deleted",
+                                okButtonText: "Ok"
+                            });
+                        }).catch(error => {
+                            alert({
+                                title: "Operation failed",
+                                message: error,
+                                okButtonText: "Ok"
+                            });
+                        });
+                    }
+                });
             }
         },
         data() {
